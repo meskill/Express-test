@@ -32,9 +32,8 @@ router.post('/', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    User.remove({id: req.params.id}, function (err, user) {
+    User.remove({_id: req.params.id}, function (err) {
         if (err) next(err);
-        console.log(user);
         res.send('oki');
     })
 });
@@ -46,7 +45,7 @@ router.put('/:id', function (req, res, next) {
         user.email = req.body.email;
         user.desc = req.body.desc;
         user.save(function (err) {
-            if (err) throw err;
+            if (err) next(err);
         })
     });
 })
