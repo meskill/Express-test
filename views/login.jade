@@ -1,0 +1,14 @@
+//
+   Created by Kirill on 08.12.2015.
+
+h4 Login to your account
+form(action='./login' method='post')
+    fieldset
+        label(style="color:red") #{info}
+        pre
+        label(for='email') Email
+        input(type='email' name='email' placeholder='Your Email')
+        label(for='password') Password
+        input(type='password' name='password' placeholder='Your Password')
+        input(type='submit', value='Login')
+a(href='./twitter') Login with Twitter

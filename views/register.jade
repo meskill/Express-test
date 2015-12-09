@@ -1,0 +1,15 @@
+//
+   Created by Kirill on 09.12.2015.
+
+h4 Register
+form(action='./register' method='post')
+   fieldset
+      label(style="color:red") #{info}
+      pre
+      label(for='email') Email
+      input(type='email' name='email' placeholder='Your Email')
+      label(for='password') Password
+      input(type='password' name='password' placeholder='Your Password')
+      label(for='name') Name
+      input(type='text' name='name' placeholder='Your Name')
+      input(type='submit', value='Register')
