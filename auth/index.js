@@ -21,7 +21,7 @@ passport.use(new LocalStrategy(
 passport.use(new TwitterStrategy({
         consumerKey: 'DylSwCkPUBHdkejTidxyzQ7SI',
         consumerSecret: 'ePTlMfDH0DNz20WQMfASg9zhVuEwDQpKx9xMVsn4TL7k4YbhbY',
-        callbackURL: "http://localhost:3000/private/twitter/callback"
+        callbackURL: "http://localhost:3000/private/twitter"
     }
     , function (token, tokenSecret, profile, done) {
         var user = {

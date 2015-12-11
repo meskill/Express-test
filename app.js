@@ -34,6 +34,7 @@ app.use(passport.session())
 app.use('/users', users)
 app.use('/private', auth)
 app.all(['/login', '/register'], (req, res, next) => res.redirect('/private' + req.url))
+app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

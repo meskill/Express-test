@@ -18,8 +18,7 @@ function authenticate(method) {
     }
 }
 
-router.get('/twitter', passport.authenticate('twitter'))
-router.get('/twitter/callback', authenticate('twitter'), (req, res, next) => res.redirect('../'))
+router.get('/twitter', authenticate('twitter'), (req, res, next) => res.redirect('./'))
 
 router.post('/login', authenticate('local'), (req, res, next) => res.redirect('./'))
 
@@ -54,10 +53,24 @@ router.all('/*', function (req, res, next) {
     res.redirect('./login?info=Access Denied')
 })
 
-router.get('/', (req, res, next) => res.redirect('./index'))
+router.get('/', (req, res, next) => res.redirect('./index.html'))
 
-router.get('/index(.html?)?', function (req, res, next) {
-    res.render('private/index', {name: req.user.name, title: 'my Server'})
+router.get('/recent', (req, res, next) => res.send(req.user.recent))
+router.post('/recent', (req, res, next) => {
+    User.findById(req.user._id, (err, user) => {
+        if (err) return next(err)
+        user.recent.push({
+            title: req.body.title
+            , count: req.body.count
+        })
+        user.save((err) => err ? next(err) : 0)
+    })
 })
+
+router.use(express.static('./private'))
+
+//router.get('/index(.html?)?', function (req, res, next) {
+//    res.render('private/index', {name: req.user.name, title: 'my Server'})
+//})
 
 module.exports = router
