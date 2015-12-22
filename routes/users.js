@@ -17,7 +17,7 @@ router.get('/:id', function (req, res, next) {
         if (err) return next(err);
         res.send(user);
     })
-})
+});
 
 router.post('/', function (req, res, next) {
     var user = {
@@ -25,7 +25,7 @@ router.post('/', function (req, res, next) {
         email: req.body.email,
         password: req.body.password,
         desc: req.body.desc
-    }
+    };
     new User(user).save(function (err) {
         if (err) return next(err);
         res.send('ok');
@@ -49,6 +49,6 @@ router.put('/:id', function (req, res, next) {
             if (err) next(err);
         })
     });
-})
+});
 
 module.exports = router;

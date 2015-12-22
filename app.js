@@ -4,13 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session')
+var session = require('express-session');
 
 //var routes = require('./routes/index');
 var users = require('./routes/users');
-var auth = require('./routes/auth')
+var auth = require('./routes/auth');
 var db = require('./db/db');
-var passport = require('./auth')
+var passport = require('./auth');
 
 var app = express();
 
@@ -26,15 +26,15 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({cookie: {secure: false}, resave: true, saveUninitialized: false, secret: 'secret'}))
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(session({cookie: {secure: false}, resave: true, saveUninitialized: false, secret: 'secret'}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //app.use('/', routes);
-app.use('/users', users)
-app.use('/private', auth)
-app.all(['/login', '/register'], (req, res, next) => res.redirect('/private' + req.url))
+app.use('/users', users);
+app.use('/private', auth);
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
+app.all(['/login', '/register'], (req, res, next) => res.redirect('/private' + req.url));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

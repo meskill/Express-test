@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/underscore/underscore-min.js"></script>
+    <script src="/bower_components/backbone/backbone-min.js"></script>
+    <script src="javascripts/AbstractView.js"></script>
+    <script src="javascripts/recent.js"></script>
+    <script src="javascripts/query.js"></script>
+    <script src="javascripts/location.js"></script>
+    <script src="javascripts/search.js"></script>
+    <script src="javascripts/favourites.js"></script>
+    <script src="javascripts/router.js"></script>
+    <script src="javascripts/index.js"></script>
+</head>
+<body>
+
+<div id="property_search">
+    <div width="50%" align="left" style="position: relative">
+        <h1 style="text-align: center">PropertyCross</h1>
+    </div>
+
+    <div width="20%" align="right" style="position: relative">
+        <a href="./logout">Logout</a>
+    </div>
+
+    <br>
+
+    <div width="20%" align="right" style="position: relative">
+        <button id="favourites_button">Favourites</button>
+    </div>
+
+
+    <br>
+    <br>
+    Use the form below to search for housed to buy.
+    You can search by place-name, postcode, or click 'My location',
+    to search in your current location
+    <br>
+    <input id='location'>
+    <br>
+    <button id="go">Go</button>
+    <button id="my_location">My location</button>
+    <br><br>
+
+
+    <div id="recent">
+        Recent Searches
+        <ul></ul>
+    </div>
+
+    <div id="error" hidden>
+        There was a problem with your search
+        <div id="error-text">
+        </div>
+    </div>
+
+    <div id="locations" hidden>
+        Please select a location below:
+        <ul></ul>
+    </div>
+</div>
+
+<div id="search_results" hidden>
+    <table>
+        <caption>0</caption>
+    </table>
+    <button id="load_more" hidden>Load more...</button>
+</div>
+
+<div id="property" hidden>
+    Property Details
+    <br>
+    <button id="favourites_add">+</button>
+    <br><br>
+
+    <div>
+
+    </div>
+</div>
+
+<div id="favourites" hidden>
+    Favourites
+    <table>
+
+    </table>
+</div>
+
+</body>
+</html>
