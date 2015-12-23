@@ -36,11 +36,12 @@ var SearchResultsView = AbstractView.extend({
 	, initialize() {
 		AbstractView.prototype.initialize.apply(this, arguments);
 		this.oel.find('#load_more').click(() => {
+			search_data.page++;
 			query.fetch({
 				dataType: 'jsonp', data: search_data, success: (col, res, op)=> {
 					this.collection.add(res, {parse: true});
 					this.render()
-				}
+				}, error: () =>  console.log('error')
 			})
 		})
 	}
@@ -54,7 +55,7 @@ var SearchResultsView = AbstractView.extend({
 	}
 	, render() {
 		this.$('caption').text(this.collection.length + ' of ' + this.result_length);
-		if (this.result_length > 20) this.oel.find('#load_more').show();
+		if (this.result_length - this.collection.length > 0) this.oel.find('#load_more').show();
 		else this.oel.find('#load_more').hide()
 	}
 	, clear() {

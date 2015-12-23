@@ -3,14 +3,14 @@
  */
 
 var Query = Backbone.Collection.extend({
-    url: 'http://api.nestoria.co.uk/api'
+	url: 'http://api.nestoria.co.uk/api'
 });
 
 var search_data = {
-    country: 'uk'
-    , pretty: 1
-    , action: 'search_listings'
-    , encoding: 'json'
-    , listing_type: 'buy'
-    , page: 1
+	country: 'uk'
+	, pretty: 1
+	, action: 'search_listings'
+	, encoding: 'json'
+	, listing_type: 'buy'
+	, page: 1
 };

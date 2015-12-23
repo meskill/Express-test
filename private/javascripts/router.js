@@ -61,10 +61,10 @@ var Router = Backbone.Router.extend({
 				this.show(this.initialView, this.locationView);
 				this.locationView.clear();
 				this.locationView.collection.set(res, {parse: true});
-				this.navigate('locations', {trigger: true});
+				this.navigate('locations', {trigger: true, replace: true});
 				break;
 			default:
-				this.navigate('error/The location given was not recognised.', {trigger: true})
+				this.navigate('error/The location given was not recognised.', {trigger: true, replace: true})
 		}
 	}
 	, recent() {
@@ -86,7 +86,13 @@ var Router = Backbone.Router.extend({
 			search_data.page = 1;
 			search_data.place_name = undefined;
 			search_data.centre_point = coords;
-			query.fetch({dataType: 'jsonp', data: search_data, success: this.parse_response.bind(this)})
+			query.fetch({
+				dataType: 'jsonp', data: search_data, success: this.parse_response.bind(this),
+				error: () => this.navigate('error/An error occurred while searching. Please check your network connection and try again', {
+					trigger: true,
+					replace: true
+				})
+			})
 		} else {
 			this.show(this.resultView)
 		}
@@ -96,7 +102,13 @@ var Router = Backbone.Router.extend({
 			search_data.page = 1;
 			search_data.place_name = title;
 			search_data.centre_point = undefined;
-			query.fetch({dataType: 'jsonp', data: search_data, success: this.parse_response.bind(this)})
+			query.fetch({
+				dataType: 'jsonp', data: search_data, success: this.parse_response.bind(this),
+				error: () => this.navigate('error/An error occurred while searching. Please check your network connection and try again', {
+					trigger: true,
+					replace: true
+				})
+			})
 		} else {
 			this.show(this.resultView)
 		}
