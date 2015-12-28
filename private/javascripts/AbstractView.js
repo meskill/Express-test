@@ -2,7 +2,7 @@
  * Created by meskill on 14.12.2015.
  */
 
-var AbstractView = Backbone.View.extend({
+app.Views.AbstractView = Backbone.View.extend({
 	initialize() {
 		this.oel = this.$el;
 		this.$el = this.$(this.tagName);

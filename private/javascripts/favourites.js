@@ -2,27 +2,32 @@
  * Created by meskill on 22.12.2015.
  */
 
-var Favourite = Result.extend({
+app.Models.Favourite = app.Models.Result.extend({
 	parse(res) {
 		return res;
 	}
 });
-var FavouritesCollection = ResultCollection.extend({
+
+app.Collections.FavouritesCollection = app.Collections.ResultCollection.extend({
 	url: './favourites'
-	, model: Favourite
+	, model: app.Models.Favourite
 	, parse(res) {
 		return res
 	}
 });
 
-var FavouritesView = SearchResultsView.extend({
+app.Views.FavouritesView = app.Views.SearchResultsView.extend({
 	initialize() {
-		AbstractView.prototype.initialize.apply(this, arguments)
+		app.Views.AbstractView.prototype.initialize.apply(this, arguments)
 	}
 	, render() {
-		AbstractView.prototype.render.apply(this, arguments)
+		app.Views.AbstractView.prototype.render.apply(this, arguments)
 	}
 	, clear() {
-		AbstractView.prototype.clear.apply(this, arguments)
+		app.Views.AbstractView.prototype.clear.apply(this, arguments)
 	}
 });
+
+
+app.collections.favourites = new app.Collections.FavouritesCollection();
+app.collections.favourites.fetch();

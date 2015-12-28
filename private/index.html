@@ -7,6 +7,9 @@
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/underscore/underscore-min.js"></script>
     <script src="/bower_components/backbone/backbone-min.js"></script>
+    <script src="javascripts/override.js"></script>
+    <script src="javascripts/app.js"></script>
+    <script src="javascripts/view.js"></script>
     <script src="javascripts/AbstractView.js"></script>
     <script src="javascripts/recent.js"></script>
     <script src="javascripts/query.js"></script>
@@ -14,22 +17,24 @@
     <script src="javascripts/search.js"></script>
     <script src="javascripts/favourites.js"></script>
     <script src="javascripts/router.js"></script>
-    <script src="javascripts/index.js"></script>
 </head>
 <body>
+<script type="text/javascript">
+    $(document).ready(app.init)
+</script>
 
 <div id="property_search">
-    <div width="50%" align="left" style="position: relative">
+    <div align="left" style="position: relative">
         <h1 style="text-align: center">PropertyCross</h1>
     </div>
 
-    <div width="20%" align="right" style="position: relative">
+    <div align="right" style="position: relative">
         <a href="./logout">Logout</a>
     </div>
 
     <br>
 
-    <div width="20%" align="right" style="position: relative">
+    <div align="right" style="position: relative">
         <button id="favourites_button">Favourites</button>
     </div>
 

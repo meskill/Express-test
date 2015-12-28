@@ -2,7 +2,7 @@
  * Created by meskill on 11.12.2015.
  */
 
-var Result = Backbone.Model.extend({
+app.Models.Result = Backbone.Model.extend({
 	defaults: {
 		price: 0
 		, loc: ''
@@ -24,21 +24,21 @@ var Result = Backbone.Model.extend({
 	}
 });
 
-var ResultCollection = Backbone.Collection.extend({
-	model: Result
+app.Collections.ResultCollection = Backbone.Collection.extend({
+	model: app.Models.Result
 	, parse(res) {
 		return res.response.listings
 	}
 });
 
-var SearchResultsView = AbstractView.extend({
+app.Views.SearchResultsView = app.Views.AbstractView.extend({
 	tagName: 'table'
 	, initialize() {
-		AbstractView.prototype.initialize.apply(this, arguments);
+		app.Views.AbstractView.prototype.initialize.apply(this, arguments);
 		this.oel.find('#load_more').click(() => {
-			search_data.page++;
-			query.fetch({
-				dataType: 'jsonp', data: search_data, success: (col, res, op)=> {
+			app.config.search_data.page++;
+			app.collections.query.fetch({
+				dataType: 'jsonp', data: app.config.search_data, success: (col, res, op)=> {
 					this.collection.add(res, {parse: true});
 					this.render()
 				}, error: () =>  console.log('error')
@@ -47,7 +47,7 @@ var SearchResultsView = AbstractView.extend({
 	}
 	, events: {
 		'click tr': function (e) {
-			this.router.navigate('property/' + e.currentTarget.id, {trigger: true})
+			app.router.navigate('property/' + e.currentTarget.id, {trigger: true})
 		}
 	}
 	, add(result) {
@@ -63,14 +63,14 @@ var SearchResultsView = AbstractView.extend({
 	}
 });
 
-var PropertyView = AbstractView.extend({
+app.Views.PropertyView = app.Views.AbstractView.extend({
 	tagName: 'div'
 	, initialize() {
 		this.oel = this.$el;
 		this.$el = this.$(this.tagName);
 		this.oel.find('#favourites_add').click(()=> {
-			this.router.favouritesView.collection.add(this.model);
-			this.router.favouritesView.collection.update()
+			app.views.favouritesView.collection.add(this.model);
+			app.views.favouritesView.collection.update()
 		})
 	}
 	, render() {
@@ -83,3 +83,6 @@ var PropertyView = AbstractView.extend({
 		}
 	}
 });
+
+
+app.collections.resultCollection = new app.Collections.ResultCollection();

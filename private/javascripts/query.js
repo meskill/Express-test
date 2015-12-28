@@ -2,11 +2,11 @@
  * Created by meskill on 11.12.2015.
  */
 
-var Query = Backbone.Collection.extend({
+app.Collections.Query = Backbone.Collection.extend({
 	url: 'http://api.nestoria.co.uk/api'
 });
 
-var search_data = {
+app.config.search_data = {
 	country: 'uk'
 	, pretty: 1
 	, action: 'search_listings'

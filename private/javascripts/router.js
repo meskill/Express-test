@@ -2,7 +2,7 @@
  * Created by meskill on 21.12.2015.
  */
 
-var query = new Query();
+app.collections.query = new app.Collections.Query();
 
 var Router = Backbone.Router.extend({
 	routes: {
@@ -15,23 +15,14 @@ var Router = Backbone.Router.extend({
 		'favourites': 'favourites',
 		'*path': 'recent'
 	}
-	, initialize(recentSearchView, locationView, errorView, initialView, resultView, propertyView, favouritesView) {
-		this.recentSearchView = recentSearchView;
-		this.locationView = locationView;
-		this.errorView = errorView;
-		this.initialView = initialView;
-		this.resultView = resultView;
-		this.propertyView = propertyView;
-		this.favouritesView = favouritesView
-	}
 	, hide() {
-		this.recentSearchView.hide();
-		this.locationView.hide();
-		this.errorView.hide();
-		this.initialView.hide();
-		this.resultView.hide();
-		this.propertyView.hide();
-		this.favouritesView.hide()
+		app.views.recentSearchView.hide();
+		app.views.locationView.hide();
+		app.views.errorView.hide();
+		app.views.mainView.hide();
+		app.views.searchResultsView.hide();
+		app.views.propertyView.hide();
+		app.views.favouritesView.hide()
 	}
 	, show() {
 		this.hide();
@@ -44,23 +35,26 @@ var Router = Backbone.Router.extend({
 			case "101":
 			case "110":
 				if (!res.response.total_results)
-					return this.navigate('error/There were no properties found for the given location', {trigger: true});
-				this.show(this.resultView);
-				this.resultView.clear();
-				this.resultView.result_length = res.response.total_results;
-				this.resultView.collection.set(res, {parse: true});
-				this.resultView.render();
-				this.recentSearchView.collection.add([{
+					return this.navigate('error/There were no properties found for the given location', {
+						trigger: true,
+						replace: true
+					});
+				this.show(app.views.searchResultsView);
+				app.views.searchResultsView.clear();
+				app.views.searchResultsView.result_length = res.response.total_results;
+				app.views.searchResultsView.collection.set(res, {parse: true});
+				app.views.searchResultsView.render();
+				app.views.recentSearchView.collection.add([{
 					title: res.request.location,
 					count: res.response.total_results
 				}]);
-				this.recentSearchView.collection.update();
+				app.views.recentSearchView.collection.update();
 				break;
 			case "200":
 			case "202":
-				this.show(this.initialView, this.locationView);
-				this.locationView.clear();
-				this.locationView.collection.set(res, {parse: true});
+				this.show(app.views.mainView, app.views.locationView);
+				app.views.locationView.clear();
+				app.views.locationView.collection.set(res, {parse: true});
 				this.navigate('locations', {trigger: true, replace: true});
 				break;
 			default:
@@ -68,58 +62,60 @@ var Router = Backbone.Router.extend({
 		}
 	}
 	, recent() {
-		this.show(this.initialView, this.recentSearchView);
-		this.recentSearchView.show()
+		this.show(app.views.mainView, app.views.recentSearchView);
+		app.views.recentSearchView.show()
 	}
 	, locations() {
-		this.show(this.initialView, this.locationView);
-		this.locationView.show()
+		this.show(app.views.mainView, app.views.locationView);
+		app.views.locationView.show()
 	}
 	, error(error) {
-		this.show(this.initialView, this.errorView);
-		this.errorView.find('#error-text').html(error);
-		this.errorView.show()
+		this.show(app.views.mainView, app.views.errorView);
+		app.views.errorView.find('#error-text').html(error);
+		app.views.errorView.show()
 	}
 	, my_search(lon, lat) {
 		coords = lon + ',' + lat;
-		if (coords != search_data.centre_point) {
-			search_data.page = 1;
-			search_data.place_name = undefined;
-			search_data.centre_point = coords;
-			query.fetch({
-				dataType: 'jsonp', data: search_data, success: this.parse_response.bind(this),
+		if (coords != app.config.search_data.centre_point) {
+			app.config.search_data.page = 1;
+			app.config.search_data.place_name = undefined;
+			app.config.search_data.centre_point = coords;
+			app.collections.query.fetch({
+				dataType: 'jsonp', data: app.config.search_data, success: this.parse_response.bind(this),
 				error: () => this.navigate('error/An error occurred while searching. Please check your network connection and try again', {
 					trigger: true,
 					replace: true
 				})
 			})
 		} else {
-			this.show(this.resultView)
+			this.show(app.views.searchResultsView)
 		}
 	}
 	, search(title) {
-		if (title != search_data.place_name) {
-			search_data.page = 1;
-			search_data.place_name = title;
-			search_data.centre_point = undefined;
-			query.fetch({
-				dataType: 'jsonp', data: search_data, success: this.parse_response.bind(this),
+		if (title != app.config.search_data.place_name) {
+			app.config.search_data.page = 1;
+			app.config.search_data.place_name = title;
+			app.config.search_data.centre_point = undefined;
+			app.collections.query.fetch({
+				dataType: 'jsonp', data: app.config.search_data, success: this.parse_response.bind(this),
 				error: () => this.navigate('error/An error occurred while searching. Please check your network connection and try again', {
 					trigger: true,
 					replace: true
 				})
 			})
 		} else {
-			this.show(this.resultView)
+			this.show(app.views.searchResultsView)
 		}
 	}
 	, property(id) {
-		this.propertyView.model = this.resultView.collection.get(id) || this.favouritesView.collection.get(id);
-		this.propertyView.clear();
-		this.propertyView.render();
-		this.show(this.propertyView)
+		app.views.propertyView.model = app.views.searchResultsView.collection.get(id) || app.views.favouritesView.collection.get(id);
+		app.views.propertyView.clear();
+		app.views.propertyView.render();
+		this.show(app.views.propertyView)
 	}
 	, favourites() {
-		this.show(this.favouritesView)
+		this.show(app.views.favouritesView)
 	}
 });
+
+app.router = new Router();

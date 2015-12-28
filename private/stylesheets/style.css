@@ -1,14 +1,15 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    width: 80%
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
 div.search_result > img {
-  width: 80%;
-  float: left;
-  padding: 10px;
+    width: 60%;
+    float: left;
+    padding: 10px;
 }
