@@ -2,7 +2,7 @@
  * Created by meskill on 10.12.2015.
  */
 
-app = {
+var app = {
 	Models: {},
 	models: {},
 	Collections: {},
