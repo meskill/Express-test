@@ -38,4 +38,3 @@ app.Views.RecentSearchView = app.Views.AbstractView.extend({
 
 
 app.collections.recentSearch = new app.Collections.SearchCollection();
-app.collections.recentSearch.fetch();

@@ -27,6 +27,8 @@ app.init = function () {
 	app.showView('PropertyView', $('#property'));
 	app.showView('FavouritesView', $('#favourites'), app.collections.favourites);
 	app.views.errorView = $('#error');
+	app.collections.favourites.fetch();
+	app.collections.recentSearch.fetch();
 	Backbone.history.start();
 	app.router.navigate('recent', {trigger: true});
 };

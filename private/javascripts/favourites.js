@@ -30,4 +30,3 @@ app.Views.FavouritesView = app.Views.SearchResultsView.extend({
 
 
 app.collections.favourites = new app.Collections.FavouritesCollection();
-app.collections.favourites.fetch();
